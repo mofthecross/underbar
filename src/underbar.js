@@ -98,6 +98,18 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var temporaryObj = {};
+    var result = [];
+
+    _.each(array, function(item){
+      temporaryObj[item] = item; //already existing key will be overwritten by the duplicate.
+    })
+
+    _.each(temporaryObj, function(val){
+      result.push(val); 
+    })
+
+    return result;
   };
 
 
