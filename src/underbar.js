@@ -103,11 +103,11 @@
 
     _.each(array, function(item){
       temporaryObj[item] = item; //already existing key will be overwritten by the duplicate.
-    })
+    });
 
     _.each(temporaryObj, function(val){
       result.push(val); 
-    })
+    });
 
     return result;
   };
@@ -164,6 +164,16 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    var initialvalue = accumulator === undefined; // assigns true or false depending on the accumulator.
+    _.each(collection, function(item) {
+      if (initialvalue) {
+        accumulator = item; //assigns the first element as the memo @ first iteration.
+        initialvalue = false; 
+      } else {
+        accumulator = iterator(accumulator, item);
+      }
+    });
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
