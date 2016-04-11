@@ -196,15 +196,17 @@
     return _.reduce(collection, function(prev, curr) {
           return prev && !!iterator(curr); //!! is necessary b/c && returns expr if it can be converted to false.
     }, true);
-  
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+  iterator = iterator || _.identity;
+  return _.reduce(collection, function(prev, curr){
+    return prev || !!iterator(curr);
+  }, false);
   };
-
 
   /**
    * OBJECTS
