@@ -65,13 +65,11 @@
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
     var result = -1;
-
     _.each(array, function(item, index) {
       if (item === target && result === -1) {
         result = index;
       }
     });
-
     return result;
   };
 
@@ -79,11 +77,10 @@
   _.filter = function(collection, test) {
     var result = [];
     _.each(collection, function(item) {
-      if (test(item) === true) {
+      if (test(item)) {
         result.push(item);
       }
     });
-
     return result;
   };
 
@@ -93,7 +90,7 @@
     // copying code in and modifying it
     return _.filter(collection, function(item){
       return !test(item);
-    })
+    });
   };
 
   // Produce a duplicate-free version of the array.
@@ -115,9 +112,6 @@
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
-    // map() is a useful primitive iteration function that works a lot
-    // like each(), but in addition to running the operation on all
-    // the members, it also maintains an array of results.
     var result = [];
     _.each(collection, function(item) {
     	result.push(iterator(item))
@@ -180,14 +174,13 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
-    return _.reduce(collection, function(wasFound, item) {
-      if (wasFound) {
+    return _.reduce(collection, function(found, item) {
+      if (found) {
         return true;
       }
       return item === target;
     }, false);
   };
-
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
@@ -202,10 +195,14 @@
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-  iterator = iterator || _.identity;
-  return _.reduce(collection, function(prev, curr){
-    return prev || !!iterator(curr);
-  }, false);
+    !!iterator ? iterator: iterator = _.identity;
+    return !_.every(collection, function(item) {
+      return !iterator(item);
+    });
+    // similar to ._every:
+  // return _.reduce(collection, function(prev, curr){
+  //   return prev || !!iterator(curr);
+  // }, false);
   };
 
   /**
@@ -226,7 +223,18 @@
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
+
   _.extend = function(obj) {
+    var arrOfArgs = [];
+    for (var i = 1; i < arguments.length; i++) {
+      arrOfArgs.push(arguments[i]);
+    };
+    _.each(arrOfArgs, function(arg) {
+      _.each(arg, function(value, key) {
+        obj[key] = value;
+      });
+    });
+    return obj;
   };
 
   // Like extend, but doesn't ever overwrite a key that already
@@ -298,6 +306,7 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+
   };
 
 
