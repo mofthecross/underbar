@@ -313,9 +313,15 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var argsForFunc = [];
+    for (var i = 1; i < arguments.length; i++) {
+        argsForFunc.push(i); 
+      };
+    var execute = function() {
+      return func.apply(this, argsForFunc);
+    };
+    setTimeout(execute, wait);
   };
-
-
   /**
    * ADVANCED COLLECTION OPERATIONS
    * ==============================
