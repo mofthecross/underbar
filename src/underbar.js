@@ -296,7 +296,6 @@
   _.memoize = function(func) {
     const cb = typeof func === 'function' ? func : function(){return func;};
     var mem = {};
-
     return function() {
       const key = stringfy(arguments);
       if(!mem[key]){
@@ -314,9 +313,6 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-
-
-
   };
 
 
@@ -331,7 +327,14 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    
+    var arrCopy = array.slice(); 
+    for(var i = arrCopy.length - 1; i >= 0; i--) {
+      var randomIndex = Math.floor(Math.random() * (i + 1));
+      var tempVar = arrCopy[randomIndex];
+      arrCopy[randomIndex] = arrCopy[i];
+      arrCopy[i] = tempVar;
+    };
+    return arrCopy;
   };
 
 
