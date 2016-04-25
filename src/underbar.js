@@ -286,8 +286,26 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+
+  var stringfy = function(args) {
+    return Object
+      .keys(args)
+      .reduce( function(a,b) { return a + '#' + args[b]; }, '');
+  }; //turn arguments into strings. 
+
   _.memoize = function(func) {
+    const cb = typeof func === 'function' ? func : function(){return func;};
+    var mem = {};
+
+    return function() {
+      const key = stringfy(arguments);
+      if(!mem[key]){
+        mem[key] = cb.apply(this,arguments);
+      }
+      return mem[key];
+    };
   };
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -296,6 +314,9 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+
+
+
   };
 
 
@@ -310,7 +331,7 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-
+    
   };
 
 
