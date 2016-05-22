@@ -103,7 +103,7 @@
     });
 
     _.each(temporaryObj, function(val){
-      result.push(val); 
+      result.push(val);
     });
 
     return result;
@@ -140,19 +140,19 @@
   // Reduces an array or object to a single value by repetitively calling
   // iterator(accumulator, item) for each item. accumulator should be
   // the return value of the previous iterator call.
-  //  
+  //
   // You can pass in a starting value for the accumulator as the third argument
   // to reduce. If no starting value is passed, the first element is used as
   // the accumulator, and is never passed to the iterator. In other words, in
   // the case where a starting value is not passed, the iterator is not invoked
   // until the second element, with the first element as its second argument.
-  //  
+  //
   // Example:
   //   var numbers = [1,2,3];
   //   var sum = _.reduce(numbers, function(total, number){
   //     return total + number;
   //   }, 0); // should be 6
-  //  
+  //
   //   var identity = _.reduce([5], function(total, number){
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
@@ -162,7 +162,7 @@
     _.each(collection, function(item) {
       if (initialvalue) {
         accumulator = item; //assigns the first element as the memo @ first iteration.
-        initialvalue = false; 
+        initialvalue = false;
       } else {
         accumulator = iterator(accumulator, item);
       }
@@ -239,7 +239,7 @@
     for (var i = 1; i < arguments.length; i++) {
       _.each(arguments[i], function(val, key) {
         if (!(key in obj)){
-          obj[key] = val; 
+          obj[key] = val;
         }
       });
     };
@@ -291,7 +291,7 @@
     return Object
       .keys(args)
       .reduce( function(a,b) { return a + '#' + args[b]; }, '');
-  }; //turn arguments into strings. 
+  }; //turn arguments into strings.
 
   _.memoize = function(func) {
     const cb = typeof func === 'function' ? func : function(){return func;};
@@ -315,7 +315,7 @@
   _.delay = function(func, wait) {
     var argsForFunc = [];
     for (var i = 1; i < arguments.length; i++) {
-        argsForFunc.push(i); 
+        argsForFunc.push(i);
       };
     var execute = function() {
       return func.apply(this, argsForFunc);
@@ -333,7 +333,7 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    var arrCopy = array.slice(); 
+    var arrCopy = array.slice();
     for(var i = arrCopy.length - 1; i >= 0; i--) {
       var randomIndex = Math.floor(Math.random() * (i + 1));
       var tempVar = arrCopy[randomIndex];
@@ -355,13 +355,19 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
-  };
+    return _.map(collection, function(item) {
+      return typeof functionOrKey === "string" ? item[functionOrKey](args) : 
+      functionOrKey.apply(item, args)
+  });
+}
+
 
   // Sort the object's values by a criterion produced by an iterator.
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+    
   };
 
   // Zip together two or more arrays with elements of the same index
