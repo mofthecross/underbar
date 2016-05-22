@@ -384,14 +384,16 @@
     for (var i = 0; i < args.length; i++) {
       res[i] = _.pluck(arguments, i);
     }
-    return res
+    return res;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray, result) {
+  _.flatten = function(arrays, result) {
+    var first = Array.isArray(arrays[0]) ? _.flatten(arrays[0]) : [arrays[0]];
+    return !arrays.length ? [] : first.concat(_.flatten(arrays.slice(1)));
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
