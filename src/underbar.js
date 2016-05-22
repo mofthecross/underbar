@@ -360,8 +360,6 @@
       functionOrKey.apply(item, args)
   });
 }
-
-
   // Sort the object's values by a criterion produced by an iterator.
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
@@ -399,6 +397,12 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var ArgsCollection = _.sortBy(Array.apply(null, arguments), "length"); //longest to shortest;
+    return _.filter(ArgsCollection[0], function(i) {
+      return _.every(ArgsCollection, function(item){
+        return _.contains(item, i);
+      });
+    });
   };
 
   // Take the difference between one array and a number of other arrays.
