@@ -159,12 +159,12 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     var initialvalue = accumulator === undefined; // assigns true or false depending on the accumulator.
-    _.each(collection, function(item) {
+    _.each(collection, function(item, i) {
       if (initialvalue) {
         accumulator = item; //assigns the first element as the memo @ first iteration.
         initialvalue = false;
       } else {
-        accumulator = iterator(accumulator, item);
+        accumulator = iterator(accumulator, item, i);
       }
     });
     return accumulator;
@@ -356,7 +356,7 @@
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
     return _.map(collection, function(item) {
-      return typeof functionOrKey === "string" ? item[functionOrKey](args) : 
+      return typeof functionOrKey === "string" ? item[functionOrKey](args) :
       functionOrKey.apply(item, args)
   });
 }
@@ -367,7 +367,10 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-    
+    return collection.sort(function(a, b) {
+      return typeof iterator === "string" ?
+      a[iterator] - b[iterator] : iterator(a) - iterator(b);
+    });
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -376,6 +379,12 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var args = _.sortBy(Array.apply(null, arguments), "length");
+    var res = [];
+    for (var i = 0; i < args.length; i++) {
+      res[i] = _.pluck(arguments, i);
+    }
+    return res
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
