@@ -75,13 +75,12 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    var result = [];
-    _.each(collection, function(item) {
-      if (test(item)) {
-        result.push(item);
+    return _.reduce(collection, function(prev, curr){
+      if (test(curr)) {
+        prev.push(curr);
       }
-    });
-    return result;
+      return prev;
+    }, []);
   };
 
   // Return all elements of an array that don't pass a truth test.
@@ -305,15 +304,13 @@
     };
   };
 
-
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
-  //
   // The arguments for the original function are passed after the wait
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    var argsForFunc = [];
+    var argsForFunc = []
     for (var i = 1; i < arguments.length; i++) {
         argsForFunc.push(i);
       };
@@ -357,9 +354,9 @@
   _.invoke = function(collection, functionOrKey, args) {
     return _.map(collection, function(item) {
       return typeof functionOrKey === "string" ? item[functionOrKey](args) :
-      functionOrKey.apply(item, args)
-  });
-}
+      functionOrKey.call(item, args);
+    });
+  }
   // Sort the object's values by a criterion produced by an iterator.
   // If iterator is a string, sort objects by that property with the name
   // of that string. For example, _.sortBy(people, 'name') should sort
@@ -419,5 +416,6 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+
   };
 }());
