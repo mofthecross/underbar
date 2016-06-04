@@ -94,20 +94,14 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
-    var temporaryObj = {};
-    var result = [];
-
-    _.each(array, function(item){
-      temporaryObj[item] = item; //already existing key will be overwritten by the duplicate.
+    var tempObj = _.reduce(array, function(prev, curr) {
+      prev[curr] = curr;
+      return prev
+    }, {});
+    return _.map(Object.keys(tempObj), function(item) {
+      return  Number(item);
     });
-
-    _.each(temporaryObj, function(val){
-      result.push(val);
-    });
-
-    return result;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
