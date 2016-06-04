@@ -217,21 +217,21 @@
       _.each(argument, function(val, key) {
         prev[key] = val;
       });
-      return prev
+      return prev;
     }, obj);
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    for (var i = 1; i < arguments.length; i++) {
-      _.each(arguments[i], function(val, key) {
-        if (!(key in obj)){
-          obj[key] = val;
+    return _.reduce(arguments, function(prev, argument) {
+      _.each(argument, function(val, key) {
+        if (!(key in prev)) {
+            prev[key] = val;
         }
       });
-    };
-    return obj;
+      return prev;
+    }, obj);
   };
 
 
