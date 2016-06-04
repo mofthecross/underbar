@@ -169,7 +169,7 @@
     // terms of reduce(). Here's a freebie to demonstrate!
     return _.reduce(collection, function(prev, curr) {
       if (curr === target) {
-        prev = true; 
+        prev = true;
       }
       return prev
     }, false);
@@ -179,7 +179,7 @@
     // TIP: Try re-using reduce() here.
     !!iterator ? iterator : iterator = _.identity; //uses identity if iterator is not provided
     return _.reduce(collection, function(prev, curr) {
-          return prev && !!iterator(curr); //!! is necessary b/c && returns expr if it can be converted to false.
+      return prev && !!iterator(curr); //!! is necessary b/c test maybe a expeting a truthy value not a true value
     }, true);
   };
 
@@ -191,10 +191,6 @@
     return !_.every(collection, function(item) {
       return !iterator(item);
     });
-    // similar to ._every:
-  // return _.reduce(collection, function(prev, curr){
-  //   return prev || !!iterator(curr);
-  // }, false);
   };
 
   /**
@@ -217,12 +213,12 @@
   //   }); // obj1 now contains key1, key2, key3 and bla
 
   _.extend = function(obj) {
-    for (var i = 1; i < arguments.length; i++) {
-      _.each(arguments[i], function(val, key) {
-        obj[key] = val;
+    return _.reduce(arguments, function(prev, argument) {
+      _.each(argument, function(val, key) {
+        prev[key] = val;
       });
-    };
-    return obj;
+      return prev
+    }, obj);
   };
 
   // Like extend, but doesn't ever overwrite a key that already
