@@ -298,7 +298,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
-    var argsForFunc = []
+    var argsForFunc = [];
     for (var i = 1; i < arguments.length; i++) {
         argsForFunc.push(i);
       };
@@ -366,10 +366,9 @@
     var res = [];
     for (var i = 0; i < args.length; i++) {
       res[i] = _.pluck(arguments, i);
-    }
+    };
     return res;
   };
-
   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
@@ -378,14 +377,13 @@
     var first = Array.isArray(arrays[0]) ? _.flatten(arrays[0]) : [arrays[0]];
     return !arrays.length ? [] : first.concat(_.flatten(arrays.slice(1)));
   };
-
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
-    var ArgsCollection = _.sortBy(Array.apply(null, arguments), "length"); //longest to shortest;
-    return _.filter(ArgsCollection[0], function(i) {
-      return _.every(ArgsCollection, function(item){
-        return _.contains(item, i);
+    var args = Array.apply(null, arguments);
+    return _.filter(args[0], function(item) {
+      return _.every(args, function(arg) {
+        return _.contains(arg, item)
       });
     });
   };
