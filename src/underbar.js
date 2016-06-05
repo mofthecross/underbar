@@ -234,7 +234,6 @@
     }, obj);
   };
 
-
   /**
    * FUNCTIONS
    * =========
@@ -275,17 +274,17 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
 
-  var stringfy = function(args) {
-    return Object
-      .keys(args)
-      .reduce( function(a,b) { return a + '#' + args[b]; }, '');
-  }; //turn arguments into strings.
+  // var stringfy = function(args) {
+  //   return Object
+  //     .keys(args)
+  //     .reduce( function(a,b) { return a + '#' + args[b]; }, '');
+  // }; //turn arguments into strings.
 
   _.memoize = function(func) {
     const cb = typeof func === 'function' ? func : function(){return func;};
     var mem = {};
     return function() {
-      const key = stringfy(arguments);
+      const key = JSON.stringify(arguments);
       if(!mem[key]){
         mem[key] = cb.apply(this,arguments);
       }
